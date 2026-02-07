@@ -1,0 +1,304 @@
+---
+title: "Projecting Future Streamflow on Shavers Fork under RCP Scenarios 4.5 and 8.5"
+author: "Sean Keane"
+format: html
+editor: visual
+---
+
+## Abstract
+
+Climate change and anthropogenic activities that lead to increases in greenhouse gas concentrations are crucial factors to understand and project future hydrologic dynamics. The development of global climate models, have allowed researchers to model future meteorological and atmospheric changes across the world, with varying rates to which greenhouse gas concentrations are mitigated. Examining the effects of climate change on hydrologic dynamics is crucial to ensure that appropriate management practices are adopted for future changes. This project attempts to predict future streamflow on the Shavers Fork at USGS Gauge: 0306880, in the Monongahela National Forest. Using historical data collected from daily measurements taken between 1/1/1999 to 12/31/2023, future streamflow is then modeled using the GFDL-ESM2M model under RCP scenarios 4.5 and 8.5 from 1/1/2024 to 12/31/2099. A seasonal autoregressive integrated moving average with exogenous variables (SARIMAX) model is used to project streamflow using climate variables to determine future trends. This project found that streamflow in the Shavers Fork will
+
+## 1. Literature Review
+
+Future forest and hydrologic dynamics are expected to shift over the 21st century due to climate change, impacting both water resources and ecological systems (Creed et al., 2014; Caldwell et al., 2016; Gaertner et al., 2020). This poses a severe threat to mountainous headwater catchments, which serve as critical sources of clean water for large metropolitan areas (USDA Forest Service, 2010). The central Appalachian Mountains, in particular, provide approximately 30% of the drinking water for mid-Atlantic and mid-western cities, including Washington, D.C., Pittsburgh, PA, and Cincinnati, OH. Overall, this region is a source of clean water for over 9% of the U.S. population. (Dudley and Stolton, 2003). The Shavers Fork is one such headwater source located in the Monongahela National Forest (MNF). As a primary tributary of the Cheat River, which ultimately flows into the Monongahela River, Shavers Fork is a contributor to Pittsburgh's water supply and forms part of the Mississippi watershed (PWC, 2023). Originating at Thorny Flat, near Snowshoe Mountain ski resort, Shavers Fork flows northward between Cheat Mountain and Shavers Mountain, draining basins that support clean water for over 5 million people (PWC, 2023). The watershed also supports vital ecological functions, including sustaining the southernmost populations of native brook trout, an indicator species for cold-water habitats (Petty et al., 2012). Approximately 97% forest, the Shavers Fork watershed is predominantly public land, with two-thirds of its length falling within the Monongahela National Forest (WV Rivers, 2022). Shavers Fork and the MNF do not just serve as an important ecological resource, it also offers recreational opportunities and forms a piece of Appalachian heritage (Kinder, 2017).
+
+The MNF, located in the Allegheny Mountains of eastern West Virginia, spans over 384,000 hectares of predominantly second and third-growth forest (USDA Forest Service, 2021). The topographical complexity of the MNF contributes to supporting a high amount of vegetative biodiversity. It is host to at least 75 tree species, hundreds of bird species, nine federally listed endangered or threatened species, and 13% of West Virginia's rare plant and animal species (USDA Forest Service, 2006). The highest point in West Virginia, Spruce Knob at 1,482 meters, is located within the MNF, as well as elevations of 275 meters in the eastern Ridge and Valley region (USDA Forest Service, 2021). This range in elevation commonly forms micro-climates on the slope of a single mountain side (Thomas-Van Gundy, 2011). On slopes above 1000 meters, flora and fauna typical of northern boreal forests can be found, such as stands of red spruce and northern hardwoods. At lower elevations, mixed mesophytic forests are the primary vegetation type (Cleland et al., 2007). Much of the MNF is characterized by steep slopes with shallow soils, and a dominant sandstone geology (Petty and Thorne, 2005). However, because of the poor buffering capacities of sandstone, many streams and rivers in the MNF are sensitive to acidification and changes in pH (Gaujot, 2002).
+
+Anthropogenic stressors have exacerbated threats of acidification posed to central Appalachian streams. Both direct and indirect sources of pollutants have caused nutrient depletion and acidification. Atmospheric acid deposition is primarily caused by sulfate and nitrate pollutants that blow down-wind towards the MNF. This has caused a decline in red spruce and northern hardwood growth, as well as eroded soil structure and groundwater infiltration properties (Adams et al., 1996; Elias et al., 2009). Acid mine drainage (AMD), another significant source of pollution, is a result of mining operations that expose pyrite and other sulfides to moisture and oxygen. This reaction creates sulfuric acid with a high concentration of heavy metals (Connolly et al., 2007), rendering the stream uninhabitable and unsafe for consumption. In West Virginia, approximately 80% of the public water supply is sourced from rivers and streams (Dieter et al., 2018). This leaves many municipalities and landowners susceptible to toxins that leach through groundwater or flow directly into streams used for drinking. In addition, ongoing localized and seasonal droughts further threaten future availability, leaving upstream communities in the headwaters of unregulated watershed most at risk (Kearns et al., 2020).
+
+Climate change is projected to significantly alter hydrologic patterns in the Appalachian region, which will directly impact water availability to downstream communities. Changing temperatures, altered precipitation regimes, and an increase in the frequency of extreme weather events are expected to destabilize existing hydrologic systems (Baran et al., 2019; Stagge et al., 2017; Devineni et al., 2015). In general, more humid regions tend to see an increase in annual precipitation levels while arid regions experience a decrease (Chou et al., 2009). Over the last several decades, the central Appalachian region has become warmer and wetter, evidence for the theory that the global water cycle is intensifying (Hayhoe et al., 2007). In order to model future climate trends, researchers develop and then analyze General Circulation Models (GCMs). Using climate change scenarios created by the Intergovernmental Panel on Climate Change (IPCC), various Representative Concentration Pathways (RCPs) are modeled using GCMs. RCPs represent global greenhouse gas emission trends throughout the 21^st^ century. RCP 4.5 is an intermediate climate scenario where global atmospheric emissions are mitigated by mid-century. RCP 8.5 is the most severe scenario where emissions continue to increase throughout the century with no mitigation (van Vuuren et al., 2011). In central Appalachia, RCP 4.5 is projected to cause an increase in precipitation during the first quarter of the 21^st^ century, then decrease through 2026-2075, and then increase again between 2076 and 2099. Under RCP 8.5, precipitation is expected to decrease between 2006-2025, then increase through the mid-century, and then continue to increase in the northern regions of central Appalachia and decrease in the southern regions during the latter half of the 21^st^ century (Fernandez and Zegre, 2019). While this is one climate variable that has a direct impact on streamflow, other factors such as potential evapotranspiration also play a significant role in hydrologic dynamics. Potential evapotranspiration is projected to steadily increase under both RCP 4.5 and 8.5, by 5-20% and 20-35%, respectively. This is increasing at a rate greater than precipitation and will have a greater effect at higher elevations which will reduce the productivity of mountainous watersheds (Devineni et al., 2015).
+
+However, GCMs are largely limited by their coarse resolution. This poses challenges to researchers working on fine-scale analyses and may generate inaccurate results (Ahmed et al., 2012). For mountainous regions where there is a variety of microclimates and local processes, GCM projections may fail to capture critical variations in climate variables. To solve this issue, GCMs can be statistically downscaled to improve the spatial resolution and accuracy for smaller regions, like HUC 10 watersheds. Downscaled GCMs, such as the ones offered through the Multivariate Adaptive Constructed Analogs (MACA) method, offer gridded surface climate data with a spatial resolution of 4 km^2^ (Abatzoglou and Brown, 2012). Using downscaled GCM data for future projections has allowed researchers to confidently model climate change scenarios for regionally focused studies. The central Appalachian region has been used extensively as a site for modeling the effects of future climate change. However, there still remain gaps in site-specific understanding of how climate change will affect streamflow in small headwaters. This study attempts to project streamflow through the 21^st^ century under RCP scenarios 4.5 and 8.5 for the Shavers Fork.
+
+## 2. Materials and Methods
+
+### *2.1 Study Site*
+
+The Shavers Fork is a 556 km^2^, high elevation HUC 10 watershed that originates from Thorny Flat, WV at 1,350 meters (Fig. 1). It flows north approximately 89 miles, where it then drains into the Cheat River near Parsons, WV at 490 meters. The entirety of the river is within the boundaries of the Monongahela National Forest. Land cover is predominantly mixed deciduous and coniferous forest. The monthly averages for climate variables within the watershed and streamflow recorded between 1/1/1998 to 12/31/2023 are outlined in Table 1.
+
+![](shavers_fork.png){fig-align="center"}
+
+[figure 1. map of shavers fork and surrounding regions. blue lines represent usgs flowlines of shavers Fork and its tributaries. the purple point notes the location of usgs gauge 03068800.]{.smallcaps}
+
+| Variable | Jan. | Feb. | Mar. | Apr. | May | Jun. | Jul. | Aug. | Sept. | Oct. | Nov. | Dec. |
+|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|
+| Q (*cfs*) | 542 | 560 | 774 | 700 | 565 | 359 | 248 | 181 | 200 | 256 | 381 | 518 |
+| Precip. (*mm*) | 187 | 165 | 178 | 198 | 245 | 276 | 286 | 244 | 197 | 164 | 144 | 174 |
+| Solar rad. (*W/m*^2^) | 92.4 | 119 | 174 | 216 | 249 | 262 | 260 | 242 | 197 | 148 | 101 | 81.7 |
+| Min. Temp (*°K*) | 267 | 268 | 272 | 277 | 282 | 287 | 289 | 288 | 285 | 278 | 273 | 270 |
+| Max. Temp (*°K*) | 277 | 279 | 285 | 291 | 296 | 299 | 301 | 301 | 297 | 291 | 285 | 280 |
+| Min. VPD (*kPa*) | 0.153 | 0.178 | 0.281 | 0.462 | 0.512 | 0.493 | 0.537 | 0.518 | 0.462 | 0.402 | 0.278 | 0.184 |
+
+[table 1. monthly averages from 1/1/1998 to 12/31/2023 for q and gridmet climate variables within the shavers fork watershed.]{.smallcaps}
+
+### *2.2 Data*
+
+| Data | Time | Source | R Package |
+|:----------------:|:----------------:|:----------------:|:----------------:|
+| Streamflow (Q) | 1/1/1998 - 12/31/2023 | USGS | `dataRetrieval` |
+| Historical Climate Variables | 1/1/1998 - 12/31/2023 | Gridded Surface Meteorological (gridMET) dataset | `climateR` |
+| Future Climate Variables | 1/1/2024 - 12/31/2099 | GFDL-ESM2M | `climateR` |
+
+[table 2. data sources and r (v. 4.2.2) packages used for extraction.]{.smallcaps}
+
+#### *2.2.1 Streamflow*
+
+Historical daily streamflow data for Shavers Fork was sourced from USGS Gauge 03068800, located near Bowden, WV. This was obtained using the `dataRetrieval` package in R (v. 4.4.2) (Cicco et al., 2024). The data is recorded for the period from 1/1/1998 to 12/31/2023 and includes daily measurements of discharge/streamflow (Q) in cubic feet per second (cfs) (USGS, 2024). The streamflow records serve as the dependent variable of the time series analysis. The monthly averages for this time period are plotted in Figure 2.
+
+![](hist_q_shavers.png){fig-align="center"}
+
+[figure 2. plot of monthly streamflow on shavers fork (usgs: 0306880) from 1/1/1998 to 12/31/2023.]{.smallcaps}
+
+#### *2.2.2 Climate Variables*
+
+Daily historical climate variables for the same period as the streamflow data were obtained from the Gridded Surface Meteorological dataset (gridMET). This dataset, produced by the University of Idaho, offers high-resolution (4 km^2^) raster data. Future daily climate variables were sourced from the Multivariate Adaptive Constructed Analogs (MACA), which provides statistically downscaled projections of future climate trends. The GCM selected for this study is the GFDL-ESM2M, developed by National Oceanic and Atmospheric Administration (NOAA) and the Geophysical Fluid Dynamics Laboratory (GFDL) (Fig. 3). RCP scenarios 4.5 and 8.5 were were extracted for the GFDL-ESM2M model.
+
+Climate variables obtained for historical gridMET data and future GFDL-ESM2M data are:
+
+-   Precipitation (*mm*)
+
+-   Maximum temperature (*°K*)
+
+-   Minimum temperature (*°K*)
+
+-   Solar radiation (*W/m*^2^)
+
+-   Minimum Vapor pressure deficit (*kPa*)
+
+For both historic and future climate variables, this was obtained using the `climateR` package in R (v. 4.2.2) (Johnson, 2024). This data was reprojected to ensure that the CRS of the HUC 10 watershed boundary and the climate raster data were properly aligned. The watershed boundary was then used to clip and the calculate zonal statistics for each climate variable on every day. This ensured that only climate measurements from within the drainage of the Shavers Fork are used.
+
+Additionally, all datasets used were pre-processed to remove Leap Days.
+
+### *2.3 Stationarity Assessment*
+
+To ensure that later modeling techniques did not break assumptions of stationarity, streamflow and historic climate variables were tested with the Augmented Dickey-Fuller (ADF) test and the Kwiatkowski-Phillips-Schmidt-Shin (KPSS) test. The ADF test evaluates the null hypothesis that a time series data set contains a unit root, which implies that there is non-stationarity in the mean (Dickey and Fuller, 1979). In contrast, the KPSS tests examines two null hypotheses: that the series is level stationary or trend stationary (Kwiatkowski et al,. 1992). Together, these tests provide complementary insights into the stationary properties of the time series datasets.
+
+The ADF test was applied to detect non-stationarity in the mean by checking for a unit root present, with a significant p-value indicating stationarity. The KPSS tests was applied to test the variance characteristics of the series, with non-significant p-values indicating that the data is stationary. Each variable was tested individually and differences were applied to reach stationarity. Variables that exhibited non-stationarity underwent first-order differencing to remove trends while still preserving the seasonality component. Once differencing was applied, the modified datasets were re-evaluated to ensure stationarity before further analysis. Because differencing reduced the dataset by one data point (the first row/day), the differenced time series data is then realigned with other climate variables by shared dates. This process removed measurements on 1/1/1998 from all variables. This iterative process ensured that all variables conformed to the assumptions required for time series modeling and that variables remained temporally aligned.
+
+```{r}
+#| eval: false
+
+library(tseries)
+
+# Function to run ADF and KPSS tests
+test_stationarity <- function(data, value_col, variable_name) {
+  series <- data[[value_col]]
+  cat("\nResults for:", variable_name, "\n")
+  
+  # ADF Test
+  adf_result <- adf.test(series, alternative = "stationary")
+  cat("ADF Test:\n")
+  print(adf_result)
+  
+  # KPSS Level Test
+  kpss_result <- kpss.test(series, null = "Level")
+  cat("\nKPSS Level Test:\n")
+  print(kpss_result)
+  
+  # KPSS Trend Test
+  kpss_result2 <- kpss.test(series, null = "Trend")
+  cat("\nKPSS Trend Test:\n")
+  print(kpss_result2)
+}
+
+test_stationarity(shavers_Q, "Value", "Streamflow (Q)")
+test_stationarity(precip_hist, "Value", "Precipitation")
+test_stationarity(solrad_hist, "Value", "Solar Radiation")
+test_stationarity(mintemp_hist, "Value", "Minimum Temperature")
+test_stationarity(maxtemp_hist, "Value", "Maximum Temperature")
+test_stationarity(vpd_hist, "Value", "Vapor Pressure Deficit")
+
+# Applying differencing to series
+apply_differencing <- function(data, value_col, output_file) {
+  data <- data %>% mutate(DiffValue = c(NA, diff(!!sym(value_col))))
+  # Removes first row (NA introduced by differencing)
+  data <- data %>% filter(!is.na(DiffValue))
+  
+  write.csv(data, output_file, row.names = FALSE)
+}
+
+# Apply differencing to precipitation and minimum temperature
+apply_differencing(precip_hist, "Value", "diff_precip_hist.csv")
+apply_differencing(mintemp_hist, "Value", "diff_mintemp_hist.csv")
+
+precip_hist_diff <- read.csv("diff_precip_hist.csv")
+mintemp_hist_diff<- read.csv("diff_mintemp_hist.csv")
+
+# Rerun ADF and KPSS tests after differencing
+test_stationarity(precip_hist_diff, "DiffValue", "Differenced Precipitation")
+test_stationarity(mintemp_hist_diff, "DiffValue", "Differenced Min. Temperature")
+```
+
+### *2.4 Variable Temporal Lags*
+
+To identify the temporal relationships between climate variables and streamflow, this analysis utilized a combination of Granger causality analysis, temporal lag analysis, and insights obtained from autocorrelation (ACF) and partial autocorrelation (PACF) functions.
+
+#### *2.4.1 Autocorrelation Analysis*
+
+ACF and PACF analyses were performed on daily streamflow data to understand its temporal dependencies and to develop parameters for our forecasting model. The ACF test revealed that a strong autocorrelation structure at shorter lags (1-10 days), with a gradual exponential decay extending to longer lags. The autocorrelation across shorter and longer lags suggests that streamflow is persistent across time. Catchment dynamics such as delayed runoff, groundwater infiltration, and storage capacity would contribute to this effect. The PACF test indicated a sharp decline in significant autocorrelation beyond 6 days (Fig. 3). The first six lags effectively capture the autoregressive dynamics of the series. This observation aligns with hydrologic process in mountainous catchments, where recent streamflow is primarily influenced by precipitation events and short-term base flow responses (Raczynski and Dyer, 2022). From these results, six autoregressive lags were selected to effectively model the immediate and delayed effects of past streamflow on current streamflow.
+
+![](q_acf_pacf.png){fig-align="center"}
+
+[figure 3. acf and pacf results for streamflow lags.]{.smallcaps}
+
+```{r}
+#| eval: false
+library(stats)
+
+acf_pacf_plot <- function(data, value_col, variable_name) {
+  series <- data[[value_col]]
+  
+  par(mfrow = c(1, 2))
+  acf(series, main = paste("ACF of", variable_name))
+  pacf(series, main = paste("PACF of", variable_name))
+  
+  return(series)
+}
+
+streamflow_series <- acf_pacf_plot(shavers_Q2, "Value", "Streamflow (Q)")
+```
+
+#### *2.4.2 Granger Causality*
+
+Granger causality analysis was employed to examine whether lagged climate variables provides useful information for predicting the behavior of streamflow, beyond what is observed within its own lagged values. Granger causality tests whether the one time series can be used to improve the predictability of another time series (Granger, 1969). This approach is particularity valuable in hydrologic forecast studies, where streamflow is influenced by both endogenous processes, such as runoff and baseflow, and exogenous climatic drivers, like precipitation and temperature (Ombadi et al., 2020).
+
+Granger causality tests were conducted for each climate variable. The tests used a series of lags ranging from 1 to 30 days to evaluate the effect of climate variable lags on predicting daily streamflow. Each test involved comparing two models. The null model is a linear regression model that incorporates only the autoregressive lags of streamflow. The alternative model adds the lagged values of the climate variables under consideration of the null model. The models were evaluated using an F-test to determine whether the inclusion of lagged climate variables significantly improved the model fit. A statistically significant result indicates that the lagged climate variable improved the model's predictive power, providing evidence of Granger causality.
+
+```{r}
+#| eval: false
+library(lmtest)
+
+test_granger_lags <- function(data, max_lag = 30) {
+  climate_vars <- c("Precip","SolarRad","MinTemp","MaxTemp","VPD")
+  
+  for(var in climate_vars) {
+    cat("\nGranger causality results for", var, "\n")
+    cat("Testing lags 1 to", max_lag, "\n")
+    
+    results <- data.frame(
+      lag = 1:max_lag,
+      p_value = NA
+    )
+    
+    for(i in 1:max_lag) {
+      g_test <- grangertest(Q ~ get(var), order = i, data = data)
+      results$p_value[i] <- g_test$`Pr(>F)`[2]
+    }
+    
+    sig_lags <- results[results$p_value < 0.05, ]
+    cat("\nSignificant lags (p < 0.05):\n")
+    print(sig_lags)
+  }
+}
+
+test_granger_lags(combined_hist_data)
+```
+
+### *2.5 SARIMAX Forecasting*
+
+Seasonal Autoregressive Integrated Moving Average with Exogenous Variables (SARIMAX) modeling is used to forecast daily streamflow under RCP scenarios 4.5 and 8.5. SARIMAX extends the autoregressive integrated moving average (ARIMA) framework by incorporating seasonality and exogenous predictors. This allows the model to handle both the temporal structure of the streamflow data and its relationship with climate variables (Hosseinzadeh et al., 2023). Using the historical streamflow and climate data, stationarity, autocorrelation, and Granger causality tests were used to determine the appropriate parameters of the SARIMAX model. Components of the model include:
+
+1.  Non-seasonal components (*p, d, q*):
+
+    -   *p*: Number of non-seasonal autoregressive lags informed by the PACF results.
+
+    -   *d*: Order of differencing, determined by stationarity tests ADF and KPSS.
+
+    -   *q*: Number of non-seasonal moving average terms informed by ACF results.
+
+2.  Seasonal components (*P, D, Q, S*):
+
+    -   *P*: Number of seasonal autoregressive terms.
+
+    -   *D*: Seasonal differencing order (*D* = 1) to account for annual cycles.
+
+    -   *Q*: Seasonal moving average terms.
+
+    -   *S*: Seasonal period to reflect annual periodicity (*S* = 365) observed.
+
+3.  Exogenous Variables:
+
+    -   The SARIMAX framework includes lagged climate variables as exogenous predictors. These lags were determined using Granger causality analysis, which identified the specific temporal delays where climate variables exert the most significant influence on streamflow. By incorporating these lagged variables, the model is able to capture both immediate and delayed effects of climate dynamics on streamflow.
+
+#### *2.5.1 Model Calibration and Training*
+
+Model calibration and training were conducted to optimize the SARIMAX model for forecasting daily streamflow using historical climate and streamflow data. The non-seasonal autoregressive order (*p*) was determined using the PACF test, which identified significant lags in streamflow up to six days. The order of differencing (*d*) was set to 1 for variables where stationarity tests indicated non-stationarity. These tests showed that precipitation and minimum temperature required first-order differencing to remove trends. The non-seasonal moving average order (*q*) was informed by the ACF test which indicated that there was a high level of short-term dependency and gradual decay of longer significant lags. Because of the strong short-term dependency that was measured in the streamflow data, a non-seasonal moving average term of 1 is selected. For seasonal components, a seasonal differencing order (*D*) of 1 was applied to account for annual cycles observed in the streamflow data. The seasonal autoregressive (*P*) and moving average (*Q*) order were initially set to 1, based on preliminary diagnostics and the assumption that annual periodicity (*S* = 365) significantly influences streamflow behavior.
+
+The exogenous variables included lagged climate variables identified as significant through Granger causality analysis. Each climate variable's optimal lags were incorporated into the SARIMAX model to capture both immediate and delayed effects of climatic drivers on streamflow. For precipitation, lags from 1 to 30 days were found to have a significant causal effect on streamflow. All other variables as well had significant causal effects from the first step to the max lag of 30. These lags were incorporated as external regressors into the model, ensuring that the temporal influence of climate dynamics were included in the analysis.
+
+The SARIMAX model was trained on historical data from 1998 to the end of 2018 and then validated on data from 2019 to 2023. Using RMSE to measure the fit of the model, the SARIMAX model obtained a RMSE of 430.74 cfs. The fitted model was then used to project the RCP data up to 12/31/2099.
+
+## 3. Results
+
+![](shavers_actual_est.png){fig-align="center"}
+
+[shavers fork actual historic streamflow vs sarimax estimated streamflow]{.smallcaps}
+
+![](future_est.png){fig-align="center"}
+
+[shavers fork projected streamflow under rcp 4.5 and 8.5 (2024-2099)]{.smallcaps}
+
+## References
+
+Petty et al., 2012 - <https://www.tandfonline.com/doi/abs/10.1080/00028487.2012.681102>
+
+Connolly et al., 2007 - <https://books.google.com/books?hl=en&lr=&id=n_yEV8YXEHwC&oi=fnd&pg=PA428&dq=acid+mine+drainage+monongahela+national+forest&ots=o4j0cnotBw&sig=pHb3Yg3ci2uuaXp2knbwNrJ8C64#v=onepage&q=acid%20mine%20drainage%20monongahela%20national%20forest&f=false>
+
+Kinder, 2017 - <https://researchrepository.wvu.edu/cgi/viewcontent.cgi?article=8142&context=etd>
+
+Dieter et al., 2018 - <https://doi.org/10.3133/cir1441>
+
+Cleland et al., 2007 - <https://research.fs.usda.gov/treesearch/48672>
+
+Thomas-Van Gundy, 2011 - <https://researchrepository.wvu.edu/cgi/viewcontent.cgi?article=4420&context=etd>
+
+Petty and Thorne, 2005 - <https://www.researchgate.net/profile/Todd-Petty/publication/260869410_Scenario_analysis_and_the_watershed_futures_planner_predicting_future_aquatic_conditions_in_an_intensively_mined_Appalachian_watershed/links/00463532882190c9f9000000/Scenario-analysis-and-the-watershed-futures-planner-predicting-future-aquatic-conditions-in-an-intensively-mined-Appalachian-watershed.pdf>
+
+Gaujot, 2002 - <https://researchrepository.wvu.edu/cgi/viewcontent.cgi?article=2464&context=etd>
+
+Elias et al., 2009 - <https://www.sciencedirect.com/science/article/pii/S0378112709003375?casa_token=Lvfk4n3KdnQAAAAA:MZdBbp8549BUaU3lQ0Ypo7Vr16SxZEMxpftpx9BpjnAuni2OznE5CoOwiyXcLz9UXwRIO7gURnw#aep-section-id20>
+
+Adams et al., 1996 - <https://www.sciencedirect.com/science/article/pii/S0378112796039904>
+
+Kearns et al., 2020 - <https://pubs.usgs.gov/publication/ofr20231057/full#ofr20231057-r-1-13>
+
+Hayhoe et al., 2007 - <https://link.springer.com/article/10.1007/s11027-007-9133-2>
+
+Chou et al., 2009 - Evaluating the rich-get-richer mechanism in tropical precipitation change under global warming
+
+Ahmed et al., 2012 - <https://www.sciencedirect.com/science/article/pii/S0921818112002160?casa_token=6Xyq7yELzkAAAAAA:HfrOsRCda1Xt4JPSvXZ3vy2q_GkKJMCa21je48A6kFvYWPa6NwU9XgUkp9OcbKpJ8E_SUn0yjdk#f0005>
+
+van Vuuren et al,. 2011 - <https://link.springer.com/article/10.1007/S10584-011-0148-z>
+
+Fernandez and Zegre, 2019 - <https://journals.ametsoc.org/view/journals/apme/58/5/jamc-d-18-0093.1.xml>
+
+Abatzoglou and Brown, 2012 - <https://rmets.onlinelibrary.wiley.com/doi/abs/10.1002/joc.2312>
+
+Cicco et al., 2024 - De Cicco, L.A., Hirsch, R.M., Lorenz, D., Watkins, \## W.D., Johnson, M., 2024, dataRetrieval: R packages for discovering and retrieving water data available from Federal hydrologic web services, v.2.7.17, doi:10.5066/P9X4L3GE
+
+Johnson, 2024 - <https://rdrr.io/github/mikejohnson51/climateR/>
+
+Dickey, D. A., & Fuller, W. A. (1979). Distribution of the Estimators for Autoregressive Time Series with a Unit Root. *Journal of the American Statistical Association*, 74(366a), 427–431.
+
+Kwiatkowski, D., Phillips, P. C., Schmidt, P., & Shin, Y. (1992). Testing the Null Hypothesis of Stationarity against the Alternative of a Unit Root. *Journal of Econometrics*, 54(1–3), 159–178.
+
+granger, 1969 - <https://www.jstor.org/stable/1912791?casa_token=Fd5I9zHmcz4AAAAA%3Axirdt9OgI_yt_dDgsvmKPhaCunupUKqmYOuxzMycma38RegEH1hbnfJAjX1SW7x1dKo7LJTrZedIrFyhGHh7CCCw1Ou7EKTF75dUW1Yp6jkQhaDfQ2Kb>
+
+zamani et al., 2021 - <https://link.springer.com/article/10.1007/s00704-016-1747-4>
+
+Raczynski and Dyer, 2022 - <https://www.mdpi.com/2073-4441/14/23/3848>
+
+Ombadi et al., 2020 - <https://agupubs.onlinelibrary.wiley.com/doi/full/10.1029/2020WR027251>
+
+Hosseinzadeh et al., 2023 - <https://www.researchgate.net/profile/Pouya-Hosseinzadeh-2/publication/367272286_ML-Based_Streamflow_Prediction_in_the_Upper_Colorado_River_Basin_Using_Climate_Variables_Time_Series_Data/links/63c9ff1bd9fb5967c2ece606/ML-Based-Streamflow-Prediction-in-the-Upper-Colorado-River-Basin-Using-Climate-Variables-Time-Series-Data.pdf>
