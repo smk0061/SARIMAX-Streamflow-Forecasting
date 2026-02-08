@@ -22,13 +22,13 @@ Best model: **SARIMAX(6,1,1)(0,1,0)[365]** — Validation RMSE: 430.74 cfs
 | MACA Projections (GFDL-ESM2M) | 2024–2099 | Daily, ~4 km | [climatologylab.org/maca](https://www.climatologylab.org/maca.html) |
 
 ### Exogenous Climate Variables
-| Variable | gridMET | MACA | Zonal Stat |
-|----------|---------|------|------------|
-| Precipitation | pr | pr | Max |
-| Solar Radiation | srad | rsds | Max |
-| Min Temperature | tmmn | tasmin | Max |
-| Max Temperature | tmmx | tasmax | Max |
-| Vapor Pressure Deficit | vpd | vpd | Min |
+| Variable | gridMET | MACA |
+|----------|---------|------|
+| Precipitation | pr | pr |
+| Solar Radiation | srad | rsds |
+| Min Temperature | tmmn | tasmin |
+| Max Temperature | tmmx | tasmax |
+| Vapor Pressure Deficit | vpd | vpd |
 
 ## Repository Structure
 
