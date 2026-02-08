@@ -1,4 +1,4 @@
-# shavers-fork-sarimax
+# SARIMAX-Streamflow-Forecasting
 
 SARIMAX streamflow forecasting for Shavers Fork, WV under RCP 4.5 and 8.5 using gridMET and MACA climate projections.
 
