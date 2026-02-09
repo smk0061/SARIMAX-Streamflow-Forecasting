@@ -80,9 +80,6 @@ Rscript R/data_preparation.R          # Stationarity, differencing, standardizat
 Rscript R/sarimax_forecast.R          # Grid search & RCP forecasting
 Rscript R/results_visualization.R     # Generate plots
 ```
-
-Script 01 requires the HUC-10 shapefile in `shp/`.
-
 ## Author
 
 **Sean Keane**
